@@ -2,16 +2,24 @@
 
 Turn a raw vertical talking-head recording into a polished 9:16 Short: clean-take editing with
 punch-in zooms, accumulating on-screen bullets, and STT captions (a plain `.srt` plus a burnt-in
-TikTok-style version). This is the exact toolkit used to make the "Is AI making us dumber?" Short —
-the scripts ship with that video's settings as a worked example you replace with your own.
+TikTok-style version). The scripts ship with a worked example you replace with your own footage.
 
 > Heads up: this is a **template + method, not a one-click tool**. The cut list (`EDL`) is hand-built
-> per take. If you use **Claude Code**, point it at `SKILL.md` and let it drive the whole workflow on
-> your footage — that's the intended experience. Otherwise you'll build the EDL by hand (doable, but
-> the EDL *is* the work).
+> per take. The intended way to drive it is with an open-source coding agent — **[OpenCode](https://github.com/sst/opencode)**
+> reads `AGENTS.md` and runs the whole workflow on your footage. See **`SETUP.md`** for install steps,
+> including which models work **from Belarus / CIS** (DeepSeek, GLM, Kimi, or a local Ollama model —
+> since Claude/OpenAI/Gemini are geo-blocked there). You can also just run the scripts by hand (below);
+> building the EDL *is* the work either way.
 
 ## Install
 
+**Quick (Linux/macOS):**
+```bash
+./install.sh        # ffmpeg + bold font + Python packages
+```
+Then see `SETUP.md` to install the agent (OpenCode) + a model that works from Belarus.
+
+**Manual**, if you prefer:
 - **ffmpeg** (with libx264): `sudo apt install ffmpeg` / `brew install ffmpeg`
 - **Python 3.9+** and: `pip install -r requirements.txt`
 - A **bold sans TTF**. On Linux: `sudo apt install fonts-liberation`. macOS/Windows already have Arial
@@ -24,7 +32,7 @@ the scripts ship with that video's settings as a worked example you replace with
    (or set `THUMB = None` in `edit_short.py` to skip the poster-frame flash).
 2. **Build the EDL.** Open `edit_short.py` and replace the example `EDL` with cuts for your take.
    The method (transcribe → pick clean takes → find boundaries with `silencedetect` → fill rows) is in
-   `SKILL.md`. Quick boundary check on a slice:
+   `AGENTS.md`. Quick boundary check on a slice:
    ```bash
    ffmpeg -ss 120 -to 135 -i raw/take.mp4 -ac 1 -ar 16000 /tmp/s.wav
    ffmpeg -i /tmp/s.wav -af silencedetect=n=-30dB:d=0.05 -f null -    # add 120 back to the times
@@ -64,4 +72,5 @@ You now have `output.mp4` (clean) and `output_captions.mp4` (TikTok captions), p
 | `edit_short.py` | `SRC`, `THUMB`, `EDL` | Renders the assembled video |
 | `make_bullets.py` | `NAV`, `AI` lists | Accumulating bullet overlays |
 | `make_captions.py` | correction map | STT → SRT + TikTok ASS |
-| `SKILL.md` | — | Claude Code skill / method reference |
+| `AGENTS.md` | — | Agent-facing method reference (OpenCode & other OSS agents) |
+| `SETUP.md` | — | Install + Belarus-reachable model setup (OpenCode + DeepSeek/GLM/Ollama) |
