@@ -13,10 +13,16 @@ TikTok-style version). The scripts ship with a worked example you replace with y
 
 ## Install
 
-**Quick (Linux/macOS):**
+**Quick — Linux/macOS:**
 ```bash
 ./install.sh        # ffmpeg + bold font + Python packages
 ```
+**Quick — Windows (PowerShell):**
+```powershell
+powershell -ExecutionPolicy Bypass -File install.ps1   # ffmpeg (winget) + Python packages
+```
+On Windows, run the scripts with `python` instead of `python3` (e.g. `python edit_short.py`).
+
 Then see `SETUP.md` to install the agent (OpenCode) + a model that works from Belarus.
 
 **Manual**, if you prefer:

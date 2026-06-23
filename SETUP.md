@@ -6,18 +6,23 @@ API (DeepSeek / GLM / Kimi), or a fully-local model via Ollama.
 
 ## 1. System deps
 
-Run the installer (Linux/macOS) — it handles ffmpeg, the font, and the Python packages:
+Run the installer — it handles ffmpeg, the font, and the Python packages:
 ```bash
-./install.sh
+./install.sh                                            # Linux/macOS
+```
+```powershell
+powershell -ExecutionPolicy Bypass -File install.ps1   # Windows
 ```
 Or install manually: **ffmpeg** (with libx264), **Python 3.9+** (`pip install -r requirements.txt`), and
 **a bold sans TTF** (Linux: `sudo apt install fonts-liberation`; macOS/Windows already have Arial Bold).
 First `make_captions.py` run downloads the faster-whisper `small.en` model (~0.5 GB).
+(On Windows, run the scripts with `python`, not `python3`.)
 
 ## 2. Install OpenCode
 
 ```bash
-curl -fsSL https://opencode.ai/install | bash      # or: npm i -g opencode-ai
+curl -fsSL https://opencode.ai/install | bash      # Linux/macOS
+npm i -g opencode-ai                               # any OS incl. Windows (needs Node.js)
 ```
 
 OpenCode reads `AGENTS.md` in the repo automatically, so it knows how to drive the scripts.
