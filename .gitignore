@@ -1,0 +1,8 @@
+_clips/
+output*.mp4
+captions.srt
+captions.ass
+raw/*.mp4
+raw/*.png
+__pycache__/
+*.pyc
