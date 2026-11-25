@@ -55,6 +55,15 @@ The EDL is bespoke to each take's exact timings — there is no auto mode. Build
 - **Leave ~150–200ms after the last word** of a clip, especially a punchline or the closing line. Cutting
   exactly on the final word's offset feels abrupt — the ear expects a short beat. This is the flip side of
   removing trailing dead air: strip the *long* tail, keep a small one (extend `out` past the silence edge).
+- **Find the tail edge at -45dB, not -30dB.** Final consonants (the "k" in "work", a closing "t") are quiet
+  releases: `silencedetect=n=-30dB` marks the silence as starting *before* them, so an `out` set from it
+  clips the last letter. Re-check the closing word of every clip at `n=-45dB` and put `out` ≥150ms past that edge.
+- **Shorter variants (e.g. a version without the CTA):** never trim the finished render at the next clip's
+  start with a fade over it — that fade lands on the last word. Make the last kept clip carry its own
+  ~300ms tail in the EDL, confirm with `silencedetect=n=-45dB` on the trimmed file's final second that the
+  speech ends ≥250ms before the cut, and fade out only over that silence (≤120ms).
+- **Don't speed the edit up by default.** Tight jump-cuts already make it fast; a 1.1x `atempo` pass on top
+  read as "too fast". Only change speed when asked.
 - Phone `.mp4`s often report 1920×1080 but carry a rotation flag → ffmpeg decodes 1080×1920 (no crop).
 - ASS captions: the `Format:` line **must** include the `Name` field, or libass renders a stray leading
   comma (already correct in `make_captions.py`).
